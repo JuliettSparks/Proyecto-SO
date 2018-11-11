@@ -1,9 +1,3 @@
-/*class TProceso{
-public:
-float tempo;
-char name[100];
-float tam;
-*/
 #include <bits/stdc++.h>
 #include <windows.h>
 using namespace std;
@@ -39,7 +33,7 @@ int condicion(int x)
 		if(cin.fail()&&cin.rdstate())
 		{
 			continuar=true;
-			cout<<"Por favor, ingresa un Número: "<<endl;
+			cout<<"Por favor, ingresa un NÃºmero: "<<endl;
 		}
 	}while(continuar);
 	return x;
@@ -57,7 +51,7 @@ string generaNombre(int id){
 	nombres[4].name="FlipFlop";
 	nombres[5].name="Hardwar";
 	nombres[6].name="Softwar";
-	nombres[7].name="El de Métodos";
+	nombres[7].name="El de MÃ©todos";
 	nombres[8].name="Virus Windows";
 	nombres[9].name="UaaBuntu";
 	nombres[10].name="Nagobuntu";
@@ -73,7 +67,7 @@ string generaNombre(int id){
 	nombres[20].name="Mr.Bean";
 	nombres[21].name="Karol";
 	nombres[22].name="Monciloco";
-	nombres[23].name="El de Redacción";
+	nombres[23].name="El de RedacciÃ³n";
 	nombres[24].name="Sendos Procesos";
 	nombres[25].name="Happy Lunch";
 	nombres[26].name="Geogebra";
@@ -81,6 +75,21 @@ string generaNombre(int id){
 	nombres[28].name="La Chulis";
 	nombres[29].name="Guon";
 	nombres[30].name="Carlitos Palitos Pinalitos";
+	nombres[31].name="Troyano";
+	nombres[32].name="Midtown Madness";
+	nombres[33].name="El Saucedo";
+	nombres[34].name="El Serna";
+	nombres[35].name="Bluetooth";
+	nombres[36].name="Dev-C++";
+	nombres[37].name="Chrome";
+	nombres[38].name="Edgar Cortes";
+	nombres[39].name="Ballenato";
+	nombres[40].name="Code::Blocks";
+	nombres[41].name="Issac Eli Ramos MÃ¡rquez";
+	nombres[42].name="Euzeus";
+	nombres[43].name="VLC";
+	nombres[44].name="Just Another Process";
+	nombres[45].name="Pebble";
 	nombres[77].name="Mariana";
 	return nombres[id].name;
 }
@@ -104,7 +113,7 @@ TProceso::TProceso(){
 void TProceso::ligaProceso(string name,int id){
 	TNodo *nuevo=new TNodo(name,id);
 	int x;
-	cout<<"Ingrese el Tamaño del Proceso "<<nuevo->name<<endl;
+	cout<<"Ingrese el TamaÃ±o del Proceso "<<nuevo->name<<endl;
 	nuevo->tam=condicion(x);
 	if(lista==NULL){
 		lista=nuevo;
@@ -136,7 +145,7 @@ void TProceso::processID(){
 	int cantelem=0;
 	cout<<"Listado de los Procesos"<<endl;
 	while(show!=NULL){
-		cout<<"ID "<<show->id<<":"<<" Nombre del Proceso: "<<show->name<<" Tamaño del Proceso: "<<show->tam<<"mbs"<<" Tiempo Total del Proceso: "<<show->tempo<<" Segundos"<<" Tiempo Actual del Proceso: "<<show->newTempo<<" Segundos";
+		cout<<"ID "<<show->id<<":"<<" Nombre del Proceso: "<<show->name<<" TamaÃ±o del Proceso: "<<show->tam<<"mbs"<<" Tiempo Total del Proceso: "<<show->tempo<<" Segundos"<<" Tiempo Actual del Proceso: "<<show->newTempo<<" Segundos";
 		cantelem++;
 		show=show->sig;
 		cout<<endl;
@@ -182,15 +191,15 @@ void TProceso::kill(string nombre){
 			if(pop==NULL){
 				cout<<"No se ha Encontrado el Proceso "<<nombre<<endl;
 			}else if(anterior==NULL){
-				cout<<"Proceso "<<nombre<<" Eliminado con Éxito"<<endl;
+				cout<<"Proceso "<<nombre<<" Eliminado con Ã‰xito"<<endl;
 				lista=lista->sig;
 			}else{
-				cout<<"Proceso "<<nombre<<" Eliminado con Éxito"<<endl;
+				cout<<"Proceso "<<nombre<<" Eliminado con Ã‰xito"<<endl;
 				anterior->sig=pop->sig;
 				delete pop;
 			}
 	}else{
-		cout<<"Lista Vacía"<<endl;
+		cout<<"Lista VacÃ­a"<<endl;
 	}
 }
 int main(){
@@ -208,7 +217,7 @@ int main(){
 		cout<<"5.- Salir"<<endl; 
 		op=condicion(op);
 		switch(op){
-			case 1: id=0+rand()%31;
+			case 1: id=0+rand()%45;
 					name=generaNombre(id);
 					lista->ligaProceso(name,id);
 					break;
@@ -225,7 +234,7 @@ int main(){
 					system("pause");
 					break;
 			case 5: break;
-			default: cout<<"Introduce una Opción Válida"<<endl;
+			default: cout<<"Introduce una OpciÃ³n VÃ¡lida"<<endl;
 					system("pause");
 					break; 
 		}
