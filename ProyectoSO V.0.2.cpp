@@ -9,6 +9,7 @@ class TNodo{
 		float tam;
 		float tempo;
 		float newTempo;
+		string estado;
 		TNodo(string nombre,int _id){
 			this->sig=NULL;
 				id=_id;
@@ -17,6 +18,7 @@ class TNodo{
 				this->newTempo=this->tempo;
 				this->tam=0;
 				this->name=nombre;
+				this->estado="Listo";
 		}	
 };
 int condicion(int x)
@@ -44,7 +46,6 @@ struct TNombre{
 string generaNombre(int id){
 	TNombre nombres[100];
 	int cont;
-	nombres[0].name="GuidoSon";
 	nombres[1].name="Kokun";
 	nombres[2].name="Bebote";
 	nombres[3].name="VirusLetal100%RealNofeik";
@@ -90,6 +91,10 @@ string generaNombre(int id){
 	nombres[43].name="VLC";
 	nombres[44].name="Just Another Process";
 	nombres[45].name="Pebble";
+	nombres[46].name="GuidoSon";
+	nombres[47].name="GENuINE993";
+	nombres[48].name="S0 3er Parcial.pdf";
+	nombres[49].name="CCleaner";
 	nombres[77].name="Mariana";
 	return nombres[id].name;
 }
@@ -105,7 +110,9 @@ class TProceso{
 		void mejorAjuste();
 		void primerAjuste();
 		void peorAjuste();
-		TNodo* eliminar();		
+		void bloquear(string);
+		TNodo* eliminar();
+		TNodo* postbloqueo(TNodo*);		
 };
 TProceso::TProceso(){
 	lista=NULL;
@@ -145,7 +152,7 @@ void TProceso::processID(){
 	int cantelem=0;
 	cout<<"Listado de los Procesos"<<endl;
 	while(show!=NULL){
-		cout<<"ID "<<show->id<<":"<<" Nombre del Proceso: "<<show->name<<" Tamaño del Proceso: "<<show->tam<<"mbs"<<" Tiempo Total del Proceso: "<<show->tempo<<" Segundos"<<" Tiempo Actual del Proceso: "<<show->newTempo<<" Segundos";
+		cout<<"ID "<<show->id<<":"<<" Nombre del Proceso: "<<show->name<<" Tamaño del Proceso: "<<show->tam<<"mbs"<<" Tiempo Total del Proceso: "<<show->tempo<<" Segundos"<<" Tiempo Actual del Proceso: "<<show->newTempo<<" Segundos"<<" Estado Actual del Proceso: "<<show->estado<<endl;
 		cantelem++;
 		show=show->sig;
 		cout<<endl;
@@ -155,15 +162,20 @@ void TProceso::processID(){
 }
 void TProceso::iniciarProcesos(){
 	TNodo *pop=lista;
+	TNodo *aux;
 	for(;;){
 		if(pop==NULL){
 			cout<<"No hay Procesos disponibles"<<endl;
 			break;
 		}
-		cout<<"Para Pausar el proceso actual presione Space, Presione Enter para Reanudar y Escape para Salir"<<endl;
+		cout<<"Para Bloquear el proceso actual presione Shift, Presione Enter para Reanudar y Escape para Salir del Simulador"<<endl;
 		if(GetAsyncKeyState(VK_SHIFT)){
-			setbuf(stdin,NULL);
-			getchar();
+			//setbuf(stdin,NULL);
+			aux=pop;
+			TProceso::bloquear(aux->name);
+			pop=TProceso::postbloqueo(aux);
+			//pop=lista;
+			//getchar();
 		}
 		if(GetAsyncKeyState(VK_ESCAPE)){
 			break;
@@ -172,6 +184,9 @@ void TProceso::iniciarProcesos(){
 		Sleep(1000);
 		if(pop->newTempo==0){
 			pop=TProceso::eliminar();
+			if(pop->estado.compare("Bloqueado")==0){
+				pop->estado="Listo";
+			}
 			//pop=pop->sig;
 			if(pop==NULL){
 				break;
@@ -202,6 +217,41 @@ void TProceso::kill(string nombre){
 		cout<<"Lista Vacía"<<endl;
 	}
 }
+TNodo* TProceso::postbloqueo(TNodo *actual){
+	if(lista==NULL){
+		actual->estado="Bloqueado";
+		actual->sig=NULL;
+		lista=actual;
+		return lista;
+	}else{
+		tail=lista;
+		while(tail->sig!=NULL){
+			tail=tail->sig;
+		}
+		actual->sig=NULL;
+		actual->estado="Bloqueado";
+		tail->sig=actual;
+		return lista;
+	}
+}
+void TProceso::bloquear(string nombre){
+		if(lista!=NULL){
+		TNodo *pop=lista;
+		TNodo *anterior=NULL;
+		while((pop!=NULL)&&(pop->name.compare(nombre)!=0)){
+			anterior=pop;
+			pop=pop->sig;
+		}
+			if(anterior==NULL){
+				cout<<"Proceso "<<nombre<<" Bloqueado con Éxito"<<endl;
+				lista=lista->sig;
+			}else{
+				cout<<"Proceso "<<nombre<<" Bloqueado con Éxito"<<endl;
+				anterior->sig=pop->sig;
+				delete pop;
+			}
+	}
+}
 int main(){
 	setlocale(LC_ALL,"Spanish");
 	TProceso *lista=new TProceso();
@@ -217,7 +267,7 @@ int main(){
 		cout<<"5.- Salir"<<endl; 
 		op=condicion(op);
 		switch(op){
-			case 1: id=0+rand()%45;
+			case 1: id=1+rand()%49;
 					name=generaNombre(id);
 					lista->ligaProceso(name,id);
 					break;
