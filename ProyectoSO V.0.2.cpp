@@ -95,6 +95,18 @@ string generaNombre(int id){
 	nombres[47].name="GENuINE993";
 	nombres[48].name="S0 3er Parcial.pdf";
 	nombres[49].name="CCleaner";
+	nombres[50].name="RIUAA";
+	nombres[51].name="Sendas Faltas";
+	nombres[52].name="Blackberry";
+	nombres[53].name="Inclusivo";
+	nombres[54].name="Panchito";
+	nombres[55].name="El Checo";
+	nombres[56].name="Micrófonos";
+	nombres[57].name="Pabeyork";
+	nombres[58].name="Tlatoani Avelar";
+	nombres[59].name="RitmoSon";
+	nombres[60].name="iPod";
+	nombres[61].name="Policía Cibernética";
 	nombres[77].name="Mariana";
 	return nombres[id].name;
 }
@@ -267,7 +279,7 @@ int main(){
 		cout<<"5.- Salir"<<endl; 
 		op=condicion(op);
 		switch(op){
-			case 1: id=1+rand()%49;
+			case 1: id=1+rand()%61;
 					name=generaNombre(id);
 					lista->ligaProceso(name,id);
 					break;
