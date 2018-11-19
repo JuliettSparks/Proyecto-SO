@@ -75,10 +75,15 @@ TProceso::TProceso(){
 void TProceso::ligaProceso(string name,int id){
 	TNodo *nuevo=new TNodo(name,id);
 	int x;
-	do{
-	cout<<"Ingrese el TamaÃ±o del Proceso "<<nuevo->name<<endl;
+	cout<<"Ingrese el Tamaño del Proceso "<<nuevo->name<<endl;
 	nuevo->tam=condicion(x);
+		if(nuevo->tam>MAX2){
+	do{
+		cout<<"El Tamaño del Proceso es demasiado grande para la memoria Actual"<<endl; 
+		cout<<"Elija un tamaño más pequeño para el proceso "<<nuevo->name<<endl;
+		nuevo->tam=condicion(nuevo->tam);
 	}while(nuevo->tam>MAX2);
+	}
 	if(lista==NULL){
 		MAX2-=nuevo->tam;
 		lista=nuevo;
@@ -227,13 +232,15 @@ void TProceso::bloquear(string nombre){
 void TProceso::primerAjuste(string name,int _id){
 	TNodo *nuevo=new TNodo(name,_id);
 	int x,suma;
-	do{
-	cout<<"Ingresa el TamaÃ±o del Proceso "<<nuevo->name<<endl;
-	nuevo->tam=condicion(nuevo->tam);
+	cout<<"Ingrese el Tamaño del Proceso "<<nuevo->name<<endl;
+	nuevo->tam=condicion(x);
 	if(nuevo->tam>MAX2){
-		cout<<"El Proceso es demasiado Grande para la Memoria"<<endl;
-	}
+	do{
+		cout<<"El Tamaño del Proceso es demasiado grande para la memoria Actual"<<endl; 
+		cout<<"Elija un tamaño más pequeño para el proceso "<<nuevo->name<<endl;
+		nuevo->tam=condicion(nuevo->tam);
 	}while(nuevo->tam>MAX2);
+	}
 	if(lista==NULL){
 		lista=nuevo;
 		cantelem++;
@@ -251,8 +258,9 @@ void TProceso::primerAjuste(string name,int _id){
 				aux=aux->sig;
 			}
 			if(aux->sig==NULL){
+				tail=aux;
+				tail->sig=nuevo;
 				MAX2-=nuevo->tam;
-				nuevo->sig=aux;
 				cantelem++;
 			}else{
 				MAX2-=nuevo->tam;
@@ -284,16 +292,30 @@ void TProceso::ordernarLista(){
 		cout<<"Lista VacÃ­a"<<endl;
 	}
 }
+
+TNodo* TProceso::mayor(){
+	TNodo *aux=lista;
+	TNodo *max;
+	int mayor=0;
+	while(aux->sig!=NULL){
+		if(aux->tam>mayor){
+			mayor=aux->tam;
+			max=aux;
+		}
+		aux=aux->sig;
+	}
+	return max;
+}
 void TProceso::mejorAjuste(string name, int id){
 	int tam;
 	TNodo *nuevo=new TNodo(name,id);
-	cout<<"Ingrese el TamaÃ±o del Proceso "<<nuevo->name<<endl;
-	nuevo->tam=condicion(nuevo->tam);
-	if(nuevo->tam>MAX2){
+	cout<<"Ingrese el Tamaño del Proceso "<<nuevo->name<<endl;
+	nuevo->tam=condicion(tam);
+		if(nuevo->tam>MAX2){
 	do{
-		cout<<"El TamaÃ±o del Proceso es demasiado grande para la memoria Actual"<<endl; 
-		cout<<"Elija un tamaÃ±o mÃ¡s pequeÃ±o para el proceso "<<nuevo->name<<endl;
-		nuevo->tam=condicion(nuevo->tam);
+		cout<<"El Tamaño del Proceso es demasiado grande para la memoria Actual"<<endl; 
+		cout<<"Elija un tamaño más pequeño para el proceso "<<nuevo->name<<endl;
+		nuevo->tam=condicion(tam);
 	}while(nuevo->tam>MAX2);
 	}
 	if(lista==NULL){
@@ -315,8 +337,9 @@ void TProceso::mejorAjuste(string name, int id){
 				aux=aux->sig;
 			}
 			if(aux->sig==NULL){
+				tail=aux;
+				tail->sig=nuevo;
 				MAX2-=nuevo->tam;
-				nuevo->sig=aux;
 				cantelem++;
 			}else{
 				MAX2-=nuevo->tam;
@@ -327,31 +350,34 @@ void TProceso::mejorAjuste(string name, int id){
 		}
 	}
 }
-TNodo* TProceso::mayor(){
-	TNodo *aux=lista;
-	TNodo *max;
-	int mayor=0;
-	while(aux->sig!=NULL){
-		if(aux->tam>mayor){
-			mayor=aux->tam;
-			max=aux;
-		}
-		aux=aux->sig;
-	}
-	return max;
-}
 void TProceso::peorAjuste(string name,int id){
-	int pos;
+	int pos,x;
 	TNodo *nuevo=new TNodo(name,id);
 	TNodo *max;
-	cout<<"Ingrese el TamaÃ±o del Proceso "<<nuevo->name<<endl;
-	nuevo->tam=condicion(nuevo->tam);
+	cout<<"Ingrese el Tamaño del Proceso "<<nuevo->name<<endl;
+	nuevo->tam=condicion(x);
+		if(nuevo->tam>MAX2){
+	do{
+		cout<<"El Tamaño del Proceso es demasiado grande para la memoria Actual"<<endl; 
+		cout<<"Elija un tamaño más pequeño para el proceso "<<nuevo->name<<endl;
+		nuevo->tam=condicion(x);
+	}while(nuevo->tam>MAX2);
+	}
 	if(lista==NULL){
 		lista=nuevo;
 		MAX2-=nuevo->tam;
 		cantelem++;
 	}else{
 		max=TProceso::mayor();
+		if(nuevo->tam>max->tam){
+			tail=lista;
+			while(tail->sig!=NULL){
+				tail=tail->sig;
+			}
+			tail->sig=nuevo;
+			MAX2-=nuevo->tam;
+			cantelem++;
+		}else{
 		TNodo *temp=lista;
 		TNodo *final=lista;
 		while(temp->tam!=max->tam){
@@ -363,6 +389,7 @@ void TProceso::peorAjuste(string name,int id){
 		final->sig=nuevo;
 		cantelem++;
 	}
+	}	
 }
 string generaNombre(int);
 int main(){
