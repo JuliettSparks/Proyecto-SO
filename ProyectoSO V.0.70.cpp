@@ -37,7 +37,7 @@ int condicion(int x)
 		if(cin.fail()&&cin.rdstate())
 		{
 			continuar=true;
-			cout<<"Por favor, ingresa un Número: "<<endl;
+			cout<<"Por favor, ingresa un NÃºmero: "<<endl;
 		}
 	}while(continuar);
 	return x;
@@ -76,7 +76,7 @@ void TProceso::ligaProceso(string name,int id){
 	TNodo *nuevo=new TNodo(name,id);
 	int x;
 	do{
-	cout<<"Ingrese el Tamaño del Proceso "<<nuevo->name<<endl;
+	cout<<"Ingrese el TamaÃ±o del Proceso "<<nuevo->name<<endl;
 	nuevo->tam=condicion(x);
 	}while(nuevo->tam>MAX2);
 	if(lista==NULL){
@@ -117,7 +117,7 @@ void TProceso::processID(){
 	int cantele=0,memFull=0,memLibre=0;
 	cout<<"Listado de los Procesos"<<endl;
 	while(show!=NULL){
-		cout<<"ID "<<show->id<<":"<<" Nombre del Proceso: "<<show->name<<" Tamaño del Proceso: "<<show->tam<<"mbs"<<" Tiempo Total del Proceso: "<<show->tempo<<" Segundos"<<endl<<" Tiempo Actual del Proceso: "<<show->newTempo<<" Segundos"<<" Estado Actual del Proceso: "<<show->estado<<endl;
+		cout<<"ID "<<show->id<<":"<<" Nombre del Proceso: "<<show->name<<" TamaÃ±o del Proceso: "<<show->tam<<"mbs"<<" Tiempo Total del Proceso: "<<show->tempo<<" Segundos"<<endl<<" Tiempo Actual del Proceso: "<<show->newTempo<<" Segundos"<<" Estado Actual del Proceso: "<<show->estado<<endl;
 		cantele++;
 		memFull+=show->tam;
 		show=show->sig;
@@ -174,19 +174,19 @@ void TProceso::kill(string nombre){
 			if(pop==NULL){
 				cout<<"No se ha Encontrado el Proceso "<<nombre<<endl;
 			}else if(anterior==NULL){
-				cout<<"Proceso "<<nombre<<" Eliminado con Éxito"<<endl;
+				cout<<"Proceso "<<nombre<<" Eliminado con Ã‰xito"<<endl;
 				lista=lista->sig;
 				MAX2+=lista->tam;
 				cantelem--;
 			}else{
-				cout<<"Proceso "<<nombre<<" Eliminado con Éxito"<<endl;
+				cout<<"Proceso "<<nombre<<" Eliminado con Ã‰xito"<<endl;
 				anterior->sig=pop->sig;
 				MAX2+=pop->tam;
 				cantelem--;
 				delete pop;
 			}
 	}else{
-		cout<<"Lista Vacía"<<endl;
+		cout<<"Lista VacÃ­a"<<endl;
 	}
 }
 TNodo* TProceso::postbloqueo(TNodo *actual){
@@ -215,10 +215,10 @@ void TProceso::bloquear(string nombre){
 			pop=pop->sig;
 		}
 			if(anterior==NULL){
-				cout<<"Proceso "<<nombre<<" Bloqueado con Éxito"<<endl;
+				cout<<"Proceso "<<nombre<<" Bloqueado con Ã‰xito"<<endl;
 				lista=lista->sig;
 			}else{
-				cout<<"Proceso "<<nombre<<" Bloqueado con Éxito"<<endl;
+				cout<<"Proceso "<<nombre<<" Bloqueado con Ã‰xito"<<endl;
 				anterior->sig=pop->sig;
 				delete pop;
 			}
@@ -228,7 +228,7 @@ void TProceso::primerAjuste(string name,int _id){
 	TNodo *nuevo=new TNodo(name,_id);
 	int x,suma;
 	do{
-	cout<<"Ingresa el Tamaño del Proceso "<<nuevo->name<<endl;
+	cout<<"Ingresa el TamaÃ±o del Proceso "<<nuevo->name<<endl;
 	nuevo->tam=condicion(nuevo->tam);
 	if(nuevo->tam>MAX2){
 		cout<<"El Proceso es demasiado Grande para la Memoria"<<endl;
@@ -281,18 +281,18 @@ void TProceso::ordernarLista(){
 		pivote=pivote->sig;	
 	}
 	}else{
-		cout<<"Lista Vacía"<<endl;
+		cout<<"Lista VacÃ­a"<<endl;
 	}
 }
 void TProceso::mejorAjuste(string name, int id){
 	int tam;
 	TNodo *nuevo=new TNodo(name,id);
-	cout<<"Ingrese el Tamaño del Proceso "<<nuevo->name<<endl;
+	cout<<"Ingrese el TamaÃ±o del Proceso "<<nuevo->name<<endl;
 	nuevo->tam=condicion(nuevo->tam);
 	if(nuevo->tam>MAX2){
 	do{
-		cout<<"El Tamaño del Proceso es demasiado grande para la memoria Actual"<<endl; 
-		cout<<"Elija un tamaño más pequeño para el proceso "<<nuevo->name<<endl;
+		cout<<"El TamaÃ±o del Proceso es demasiado grande para la memoria Actual"<<endl; 
+		cout<<"Elija un tamaÃ±o mÃ¡s pequeÃ±o para el proceso "<<nuevo->name<<endl;
 		nuevo->tam=condicion(nuevo->tam);
 	}while(nuevo->tam>MAX2);
 	}
@@ -344,7 +344,7 @@ void TProceso::peorAjuste(string name,int id){
 	int pos;
 	TNodo *nuevo=new TNodo(name,id);
 	TNodo *max;
-	cout<<"Ingrese el Tamaño del Proceso "<<nuevo->name<<endl;
+	cout<<"Ingrese el TamaÃ±o del Proceso "<<nuevo->name<<endl;
 	nuevo->tam=condicion(nuevo->tam);
 	if(lista==NULL){
 		lista=nuevo;
@@ -373,7 +373,7 @@ int main(){
 	srand((time(NULL)));
 	do{
 		system("cls");
-		cout<<"1.- Insertar nuevo Proceso sin Ningún Ajuste"<<endl;
+		cout<<"1.- Insertar nuevo Proceso sin NingÃºn Ajuste"<<endl;
 		cout<<"2.- Mostrar Datos de Todos los Procesos Actuales"<<endl;
 		cout<<"3.- Iniciar Procesos "<<endl;
 		cout<<"4.- Eliminar un Proceso"<<endl;
@@ -415,21 +415,21 @@ int main(){
 					system("pause");
 					break;
 			case 8: exit(0); 
-			default: cout<<"Introduce una Opción Válida"<<endl;
+			default: cout<<"Introduce una OpciÃ³n VÃ¡lida"<<endl;
 					system("pause");
 					break; 
 		}
 	}while(op!=8);
 }
 string generaNombre(int id){
-	TNombre nombres[100];
+	TNombre nombres[101];
 	nombres[1].name="Kokun";
 	nombres[2].name="Bebote";
 	nombres[3].name="VirusLetal100%RealNofeik";
 	nombres[4].name="FlipFlop";
 	nombres[5].name="Hardwar";
 	nombres[6].name="Softwar";
-	nombres[7].name="El de Métodos";
+	nombres[7].name="El de MÃ©todos";
 	nombres[8].name="Virus Windows";
 	nombres[9].name="UaaBuntu";
 	nombres[10].name="Nagobuntu";
@@ -445,7 +445,7 @@ string generaNombre(int id){
 	nombres[20].name="Mr.Bean";
 	nombres[21].name="Karol";
 	nombres[22].name="Monciloco";
-	nombres[23].name="El de Redacción";
+	nombres[23].name="El de RedacciÃ³n";
 	nombres[24].name="Sendos Procesos";
 	nombres[25].name="Happy Lunch";
 	nombres[26].name="Geogebra";
@@ -463,7 +463,7 @@ string generaNombre(int id){
 	nombres[38].name="Edgar Cortes";
 	nombres[39].name="Ballenato";
 	nombres[40].name="Code::Blocks";
-	nombres[41].name="Issac Eli Ramos Márquez";
+	nombres[41].name="Issac Eli Ramos MÃ¡rquez";
 	nombres[42].name="Euzeus";
 	nombres[43].name="VLC";
 	nombres[44].name="Just Another Process";
@@ -478,19 +478,19 @@ string generaNombre(int id){
 	nombres[53].name="Inclusivo";
 	nombres[54].name="Panchito";
 	nombres[55].name="El Checo";
-	nombres[56].name="Micrófonos";
+	nombres[56].name="MicrÃ³fonos";
 	nombres[57].name="Pabeyork";
 	nombres[58].name="Tlatoani Avelar";
 	nombres[59].name="RitmoSon";
 	nombres[60].name="iPod";
-	nombres[61].name="Policía Cibernética";
+	nombres[61].name="PolicÃ­a CibernÃ©tica";
 	nombres[62].name="Molly";
 	nombres[63].name="Winamp";
 	nombres[64].name="Opera";
 	nombres[65].name="Microsoft Store";
 	nombres[66].name="ESET Smart Security";
 	nombres[67].name="Cortana";
-	nombres[68].name="Salas Pérez";
+	nombres[68].name="Salas PÃ©rez";
 	nombres[69].name="Leds Quemados";
 	nombres[70].name="Tom";
 	nombres[71].name="Homero Simpson";
@@ -498,7 +498,7 @@ string generaNombre(int id){
 	nombres[73].name="Proceses";
 	nombres[74].name="Compras Compulsivas";
 	nombres[75].name="Problemas de Primer Mundo";
-	nombres[76].name="Benjamín";
+	nombres[76].name="BenjamÃ­n";
 	nombres[77].name="Mariana";
 	nombres[78].name="Rodolfo";
 	nombres[79].name="Word";
@@ -506,12 +506,12 @@ string generaNombre(int id){
 	nombres[81].name="Keil uVision 5";
 	nombres[82].name="Amazon";
 	nombres[83].name="Zegucom";
-	nombres[84].name="Audífonos";
+	nombres[84].name="AudÃ­fonos";
 	nombres[85].name="academia.uaa.mx";
 	nombres[86].name="Windows Defender";
 	nombres[87].name="Steam";
 	nombres[88].name="MATLAB";
-	nombres[89].name="Explota Compuertas Lógicas";
+	nombres[89].name="Explota Compuertas LÃ³gicas";
 	nombres[90].name="Costco";
 	nombres[91].name="System32";
 	nombres[92].name="Microsoft Edge";
