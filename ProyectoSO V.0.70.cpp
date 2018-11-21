@@ -17,7 +17,7 @@ class TNodo{
 			this->sig=NULL;
 				id=_id;
 				srand(time(NULL));
-				this->tempo=1+rand()%10;
+				this->tempo=5+rand()%20;
 				this->newTempo=this->tempo;
 				this->tam=0;
 				this->name=nombre;
@@ -125,8 +125,12 @@ void TProceso::processID(){
 	system("cls");
 	cout<<"Listado de los Procesos:"<<endl;
 	while(show!=NULL){
+		//pop->name.compare(nombre)!=0
+		if(show->estado.compare("Bloqueado")==0){
+			cout<<termcolor::on_yellow<<"ID "<<show->id<<":"<<" Nombre del Proceso: "<<show->name<<" Tamaño del Proceso: "<<show->tam<<"mbs"<<" Tiempo Total del Proceso: "<<show->tempo<<" Segundos"<<endl<<" Tiempo Actual del Proceso: "<<show->newTempo<<" Segundos"<<" Estado Actual del Proceso: "<<show->estado<<"                           "<<endl;
+		}else{
 		cout<<termcolor::on_red<<"ID "<<show->id<<":"<<" Nombre del Proceso: "<<show->name<<" Tamaño del Proceso: "<<show->tam<<"mbs"<<" Tiempo Total del Proceso: "<<show->tempo<<" Segundos"<<endl<<" Tiempo Actual del Proceso: "<<show->newTempo<<" Segundos"<<" Estado Actual del Proceso: "<<show->estado<<"                           "<<endl;
-		cantele++;
+		}cantele++;
 		memFull+=show->tam;
 		show=show->sig;
 		//cout<<endl;
@@ -150,7 +154,7 @@ int TProceso::iniciarProcesos(){
 		}
 		//system("cls");
 		cout<<termcolor::blue<<"I N F O R M A C I O N  I M P O R T A N T E"<<endl;
-		cout<<"Para Bloquear el proceso actual presione Shift, Presione Enter para Reanudar y Escape para Salir del Simulador. Presione cuando este listo"<<termcolor::reset<<endl;
+		cout<<"Para Bloquear el proceso actual presione Shift, Presione Enter para Reanudar y Q para Salir del Simulador. Presione cuando este listo"<<termcolor::reset<<endl;
 		if(GetAsyncKeyState(VK_SHIFT)){
 			//setbuf(stdin,NULL);
 			aux=pop;
@@ -159,8 +163,11 @@ int TProceso::iniciarProcesos(){
 			//pop=lista;
 			//getchar();
 		}
-		if(GetAsyncKeyState(VK_ESCAPE)){
-			break;
+		if(GetAsyncKeyState(0x51)){
+			system("cls");
+			cout<<termcolor::green<<"Salida Exitosa"<<termcolor::reset<<endl;
+			system("pause");
+			return 0;
 		}	
 		pop->newTempo--;
 		Sleep(1000);
@@ -410,10 +417,15 @@ int main(){
 	string name;
 	int op,id,stat;
 	srand((time(NULL)));
+	struct tm *hora;
+	time_t tiempo;
+	time(&tiempo);
+    hora=localtime(&tiempo);
 	//welcome(1);
 	do{
 		system("cls");
 		welcome(0);
+		cout<<"Tiempo Actual: "<<asctime(hora);
 		cout<<termcolor::cyan<<"Seleccione una de las siguientes opciones:"<<termcolor::reset<<endl;
 		cout<<"1.- Insertar un nuevo proceso"<<endl;
 		//cout<<"1.- Insertar nuevo Proceso sin Ningun Ajuste"<<endl;
@@ -427,8 +439,7 @@ int main(){
 		op=condicion(op);
 		switch(op){
 			case 1: switch(menu2()){
-						case 1: cout<<"ok"<<endl;
-								id=1+rand()%100;
+						case 1: id=1+rand()%100;
 								name=generaNombre(id);
 								lista->ligaProceso(name,id);
 								break;
