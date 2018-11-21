@@ -8,6 +8,7 @@ class TNodo{
 	public:
 		int id;
 		string name;
+		char moments[1000];
 		TNodo *sig;
 		float tam;
 		float tempo;
@@ -20,6 +21,7 @@ class TNodo{
 				this->tempo=5+rand()%20;
 				this->newTempo=this->tempo;
 				this->tam=0;
+				strcpy(moments,"______");
 				this->name=nombre;
 				this->estado="Listo";
 		}	
@@ -76,7 +78,11 @@ TProceso::TProceso(){
 void TProceso::ligaProceso(string name,int id){
 	TNodo *nuevo=new TNodo(name,id);
 	int x;
-	
+	struct tm *hora;
+	time_t tiempo;
+	time(&tiempo);
+    hora=localtime(&tiempo);
+	strcpy(nuevo->moments,asctime(hora));
 	cout<<"Ingrese el Tamaño del Proceso "<<nuevo->name<<endl;
 	nuevo->tam=condicion(x);
 	if(nuevo->tam>MAX2){ 
@@ -127,9 +133,9 @@ void TProceso::processID(){
 	while(show!=NULL){
 		//pop->name.compare(nombre)!=0
 		if(show->estado.compare("Bloqueado")==0){
-			cout<<termcolor::on_yellow<<"ID "<<show->id<<":"<<" Nombre del Proceso: "<<show->name<<" Tamaño del Proceso: "<<show->tam<<"mbs"<<" Tiempo Total del Proceso: "<<show->tempo<<" Segundos"<<endl<<" Tiempo Actual del Proceso: "<<show->newTempo<<" Segundos"<<" Estado Actual del Proceso: "<<show->estado<<"                           "<<endl;
+			cout<<termcolor::on_yellow<<"ID "<<show->id<<":"<<" Nombre del Proceso: "<<show->name<<" Tamaño del Proceso: "<<show->tam<<"mbs"<<" Tiempo Total del Proceso: "<<show->tempo<<" Segundos"<<endl<<" Tiempo Actual del Proceso: "<<show->newTempo<<" Segundos"<<" Estado Actual del Proceso: "<<show->estado<<" Tiempo Exacto de Inicialización: "<<show->moments;//<<endl;
 		}else{
-		cout<<termcolor::on_red<<"ID "<<show->id<<":"<<" Nombre del Proceso: "<<show->name<<" Tamaño del Proceso: "<<show->tam<<"mbs"<<" Tiempo Total del Proceso: "<<show->tempo<<" Segundos"<<endl<<" Tiempo Actual del Proceso: "<<show->newTempo<<" Segundos"<<" Estado Actual del Proceso: "<<show->estado<<"                           "<<endl;
+		cout<<termcolor::on_red<<"ID "<<show->id<<":"<<" Nombre del Proceso: "<<show->name<<" Tamaño del Proceso: "<<show->tam<<"mbs"<<" Tiempo Total del Proceso: "<<show->tempo<<" Segundos"<<endl<<" Tiempo Actual del Proceso: "<<show->newTempo<<" Segundos"<<" Estado Actual del Proceso: "<<show->estado<<" Tiempo Exacto de Inicialización: "<<show->moments; //<<endl;
 		}cantele++;
 		memFull+=show->tam;
 		show=show->sig;
@@ -247,7 +253,11 @@ void TProceso::bloquear(string nombre){
 void TProceso::primerAjuste(string name,int _id){
 	TNodo *nuevo=new TNodo(name,_id);
 	int x,suma;
-	
+	struct tm *hora;
+	time_t tiempo;
+	time(&tiempo);
+    hora=localtime(&tiempo);
+	strcpy(nuevo->moments,asctime(hora));
 	cout<<"Ingresa el Tamaño del Proceso "<<nuevo->name<<endl;
 	nuevo->tam=condicion(x);
 	if(nuevo->tam>MAX2){
@@ -311,7 +321,12 @@ void TProceso::ordernarLista(){
 }
 void TProceso::mejorAjuste(string name, int id){
 	int tam;
+	struct tm *hora;
+	time_t tiempo;
+	time(&tiempo);
+    hora=localtime(&tiempo);
 	TNodo *nuevo=new TNodo(name,id);
+	strcpy(nuevo->moments,asctime(hora));
 	cout<<"Ingrese el Tamaño del Proceso "<<nuevo->name<<endl;
 	nuevo->tam=condicion(tam);
 	if(nuevo->tam>MAX2){
@@ -370,6 +385,11 @@ void TProceso::peorAjuste(string name,int id){
 	int pos,x;
 	TNodo *nuevo=new TNodo(name,id);
 	TNodo *max;
+	struct tm *hora;
+	time_t tiempo;
+	time(&tiempo);
+    hora=localtime(&tiempo);
+	strcpy(nuevo->moments,asctime(hora));
 	cout<<"Ingrese el Tamaño del Proceso "<<nuevo->name<<endl; 
 	nuevo->tam=condicion(x); 
 	if(nuevo->tam>MAX2){ 
